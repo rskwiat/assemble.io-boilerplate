@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg : grunt.file.readJSON('package.json'),
-    site: grunt.file.readJSON('src/data/_config.json'),
+    site: grunt.file.readJSON('src/data/site.json'),
 
     assemble: {
       // Task-level options
@@ -22,6 +22,7 @@ module.exports = function(grunt) {
         marked: {sanitize: false},
         production: true,
         data: 'src/**/*.{json,yml}',
+        assets: '<%= site.destination %>/assets',
         layoutdir: '<%= site.layout %>',
         partials: ['<%= site.partials %>'],
       },
@@ -50,19 +51,19 @@ module.exports = function(grunt) {
 
     watch: {
       css: {
-        files: '<%= site.assets %>/css/*.css',
+        files: '<%= site.assets %>/css/**.*',
         tasks: ['copy']
       },
       js:{
-        files: '<%= site.assets %>/js/*.js',
+        files: '<%= site.assets %>/js/**.*',
         tasks: ['copy']
       },
       fonts:{
-        files: '<%= site.assets %>/fonts/*.*',
+        files: '<%= site.assets %>/fonts/**.*',
         tasks: ['copy']
       },
       images:{
-        files: '<%= site.assets %>/images/*.*',
+        files: '<%= site.assets %>/images/**.*',
         tasks: ['copy']
       },
       html:{
@@ -74,14 +75,17 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {expand: true, src: ['<%= site.assets %>/**'],
-            dest: '<%= site.destination %>/'},
+          {
+            expand: true,
+            src: ['<%= site.assets %>/**'],
+            dest: '<%= site.destination %>/'
+          },
         ],
       },
     },
 
     clean: {
-      all: ['<%= site.destination %>/**/*.{html,md}']
+      all: ['<%= site.destination %>/**']
     }
   });
 
@@ -91,7 +95,6 @@ module.exports = function(grunt) {
  [
     'assemble',
     'grunt-contrib-clean',
-    'grunt-verb',
     'grunt-contrib-copy',
     'grunt-contrib-connect',
     'grunt-contrib-watch'
@@ -100,5 +103,8 @@ module.exports = function(grunt) {
   });
 
   // Default task to be run.
-  grunt.registerTask('default', ['clean', 'assemble','copy','connect','watch']);
+
+  grunt.registerTask('build', ['clean', 'assemble','copy']);
+  grunt.registerTask('watch-build', ['clean', 'assemble','copy', 'watch']);
+
 };

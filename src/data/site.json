@@ -5,6 +5,6 @@
   "partials": "src/templates/includes/**/*.hbs",
   "pages": "src/templates/pages",
   "copyright": "YEAR",
-  "assets": "../assets",
+  "assets": "assets",
   "title": "PROJECT NAME"
 }
