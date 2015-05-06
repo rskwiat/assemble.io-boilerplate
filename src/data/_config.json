@@ -1,0 +1,10 @@
+{
+  "production": "<%= production %>",
+  "destination": "./public",
+  "layout": "src/templates/layouts",
+  "partials": "src/templates/includes/**/*.hbs",
+  "pages": "src/templates/pages",
+  "copyright": "YEAR",
+  "assets": "../assets",
+  "title": "PROJECT NAME"
+}
